@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Virat Kohli — The King Returns 👑</title>
+<style>
+  * {margin: 0; padding: 0; box-sizing: border-box;}
+  body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Background video */
+  video.bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 100%;
+    z-index: -2;
+    filter: brightness(0.6) saturate(1.2);
+  }
+
+  /* Gradient overlay for theme mix */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0,35,102,0), rgba(215,38,56,0));
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #ff3b3b, 0 0 20px #ff3b3b; }
+    to { text-shadow: 0 0 20px #0066ff, 0 0 40px #0066ff; }
+  }
+
+  .virat-img {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #fff;
+    box-shadow: 0 0 40px rgba(255,255,255,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .virat-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: fadeIn 3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .ball {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ffb3b3, #d72638 80%);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 18%;
+    animation: bounce 2s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(255,255,255,0.4);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-80px); }
+  }
+
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+</style>
+</head>
+<body>
+  <!-- Background Video -->
+  <video class="bg-video" autoplay loop muted playsinline>
+    <source src="/Users/ramesha/Downloads/WhatsApp Video 2025-10-19 at 00.29.16.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+  <canvas id="confetti"></canvas>
+
+  <!-- Foreground content -->
+  <div class="virat-img">
+    <img src="https://media.crictracker.com/media/attachments/1747210989772_Virat-Kohli.jpeg" alt="Virat Kohli" />
+  </div>
+
+  <h1>The King Returns 👑</h1>
+  <div class="subtitle">Welcome Back, Dear Lord!🙏</div>
+  <div class="ball"></div>
+
+<script>
+// Confetti Animation
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+for (let i = 0; i < 150; i++) {
+  confetti.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 6 + 2,
+    d: Math.random() * 0.5 + 0.3,
+    color: `hsl(${Math.random() * 360}, 100%, 60%)`
+  });
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  confetti.forEach(c => {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+    ctx.fillStyle = c.color;
+    ctx.fill();
+  });
+  updateConfetti();
+}
+
+function updateConfetti() {
+  confetti.forEach(c => {
+    c.y += c.d * 5;
+    if (c.y > canvas.height) {
+      c.y = -10;
+      c.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+function animate() {
+  drawConfetti();
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
